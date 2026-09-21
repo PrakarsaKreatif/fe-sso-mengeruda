@@ -1,11 +1,14 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import api from '$lib/api';
+  import { env } from '$env/dynamic/public';
 
   let user = $state(null);
   let token = $state(null);
   let showExpiredModal = $state(false);
+
+  const isProd = env.PUBLIC_APP_ENV === 'production';
+  const getAppUrl = (prodUrl, devPort) => isProd ? `${prodUrl}/auth-receiver` : `http://localhost:${devPort}/auth-receiver`;
 
   // Daftar semua aplikasi yang terdaftar
   const apps = [
@@ -13,7 +16,7 @@
       id: 'Profile Website',
       name: 'Profile Website',
       description: 'Manajemen konten profil dan informasi pemerintahan desa.',
-      url: 'http://localhost:5174/auth-receiver',
+      url: getAppUrl('https://mengeruda.id', '5174'),
       icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5L14.5 4H5"></path></svg>',
       color: 'bg-emerald-500'
     },
@@ -21,7 +24,7 @@
       id: 'Tourism',
       name: 'Pariwisata (Tourism)',
       description: 'Manajemen objek wisata, agenda, umkm, dan berita.',
-      url: 'http://localhost:5175/auth-receiver',
+      url: getAppUrl('https://tourism.mengeruda.id', '5175'),
       icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
       color: 'bg-blue-500'
     },
@@ -29,7 +32,7 @@
       id: 'E-Surat',
       name: 'E-Surat',
       description: 'Sistem pelayanan administrasi dan persuratan desa.',
-      url: 'http://localhost:5177/auth-receiver',
+      url: getAppUrl('https://e-surat.mengeruda.id', '5177'),
       icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"></path></svg>',
       color: 'bg-orange-500'
     },
@@ -37,7 +40,7 @@
       id: 'E-Presensi',
       name: 'E-Presensi',
       description: 'Sistem absensi digital berbasis lokasi untuk aparat desa.',
-      url: 'http://localhost:5178/auth-receiver',
+      url: getAppUrl('https://e-presensi.mengeruda.id', '5178'),
       icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>',
       color: 'bg-rose-500'
     }
