@@ -1,13 +1,12 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { env } from '$env/dynamic/public';
 
   let user = $state(null);
   let token = $state(null);
   let showExpiredModal = $state(false);
 
-  const isProd = env.PUBLIC_APP_ENV === 'production';
+  const isProd = import.meta.env.PROD;
   const getAppUrl = (prodUrl, devPort) => isProd ? `${prodUrl}/auth-receiver` : `http://localhost:${devPort}/auth-receiver`;
 
   // Daftar semua aplikasi yang terdaftar
