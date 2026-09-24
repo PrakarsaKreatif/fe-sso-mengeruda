@@ -19,7 +19,8 @@
         successMsg = '';
 
         try {
-            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002/api';
+            const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_BACKEND_URL || 'http://localhost:8002';
+            const apiBaseUrl = `${baseUrl.replace(/\/$/, '')}/api`;
             const res = await fetch(`${apiBaseUrl}/register`, {
                 method: 'POST',
                 headers: {
