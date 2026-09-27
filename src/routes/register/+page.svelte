@@ -7,6 +7,7 @@
     let password = $state('');
     let nik = $state('');
     let phone = $state('');
+    let ktpFiles = $state();
     
     let errorMsg = $state('');
     let successMsg = $state('');
@@ -21,13 +22,28 @@
         try {
             const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_BACKEND_URL || 'http://localhost:8002';
             const apiBaseUrl = `${baseUrl.replace(/\/$/, '')}/api`;
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('nik', nik);
+            formData.append('phone', phone);
+            
+            if (ktpFiles && ktpFiles.length > 0) {
+                formData.append('ktp_photo', ktpFiles[0]);
+            } else {
+                errorMsg = 'Foto KTP wajib diunggah.';
+                loading = false;
+                return;
+            }
+
             const res = await fetch(`${apiBaseUrl}/register`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ name, email, password, nik, phone })
+                body: formData
             });
 
             const data = await res.json();
@@ -137,6 +153,14 @@
                     <label for="email" class="block text-sm font-medium text-slate-700">Alamat Email</label>
                     <div class="mt-1">
                         <input id="email" type="email" bind:value={email} required class="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="ktp_photo" class="block text-sm font-medium text-slate-700">Upload Foto KTP</label>
+                    <div class="mt-1">
+                        <input id="ktp_photo" type="file" accept="image/jpeg, image/png, image/jpg" bind:files={ktpFiles} required class="appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-colors bg-white">
+                        <p class="text-xs text-slate-500 mt-1">Format gambar JPG/PNG, maks 2MB.</p>
                     </div>
                 </div>
 
