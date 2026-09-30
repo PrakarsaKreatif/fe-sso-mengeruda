@@ -78,9 +78,7 @@
   });
 
   function logout() {
-    localStorage.removeItem('sso_token');
-    localStorage.removeItem('sso_user');
-    goto('/');
+    goto('/logout');
   }
   
   function isTokenExpired(t) {

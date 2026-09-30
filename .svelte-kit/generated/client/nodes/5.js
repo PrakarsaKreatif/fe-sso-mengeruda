@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/(client)/apb-desa/+page.svelte";
+export { default as component } from "../../../../src/routes/register/+page.svelte";

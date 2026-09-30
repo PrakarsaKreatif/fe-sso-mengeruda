@@ -29,16 +29,17 @@ declare module "$app/types" {
 	type MatcherParam<M> = M extends (param : string) => param is (infer U extends string) ? U : string;
 
 	export interface AppTypes {
-		RouteId(): "/" | "/dashboard" | "/register";
+		RouteId(): "/" | "/dashboard" | "/logout" | "/register";
 		RouteParams(): {
 			
 		};
 		LayoutParams(): {
 			"/": Record<string, never>;
 			"/dashboard": Record<string, never>;
+			"/logout": Record<string, never>;
 			"/register": Record<string, never>
 		};
-		Pathname(): "/" | "/dashboard" | "/register";
+		Pathname(): "/" | "/dashboard" | "/logout" | "/register";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/acara-adat-resepsi.png" | "/Batas_Desa.json" | "/berangkat-sekolah.jpeg" | "/diskusi-kantor-desa.png" | "/Fasilitas_Desa_Mengeruda.json" | "/hero-1.jpg" | "/hero-2.png" | "/icon-apbd.png" | "/Jalan_Desa_Mengeruda.json" | "/karang-taruna.png" | "/kunjungan-mahasiswa-sekolah.jpeg" | "/logo.png" | "/menjemur-padi.jpeg" | "/mpls-satap.png" | "/peta-mengeruda.png" | "/produk-tempe.png" | "/robots.txt" | "/sinergi-mahasiswa-kkn.jpeg" | "/user-placeholder.png" | "/wisata-air-panas.jpeg" | string & {};
 	}
